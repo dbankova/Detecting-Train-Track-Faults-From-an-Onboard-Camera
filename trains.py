@@ -12,6 +12,6 @@ import matplotlib.pyplot as plt
 mydata= pd.read_csv("data\\straight-track-points-on-image-1.csv")
 
 #plot points
-plt.plot(mydata.left_u,mydata.left_v)
-plt.plot(mydata.right_u,mydata.right_v)
+plt.plot(mydata.left_u,-mydata.left_v)
+plt.plot(mydata.right_u,-mydata.right_v)
 plt.show()
