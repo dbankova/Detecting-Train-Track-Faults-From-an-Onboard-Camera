@@ -9,7 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 #Import data - file location needs changing
-mydata= pd.read_csv("C:\\Users\\Deepanshu\\Documents\\file1.csv")
+mydata= pd.read_csv("data\\straight-track-points-on-image-1.csv")
 
 #plot points
 plt.plot(mydata.left_u,mydata.left_v)
