@@ -4,6 +4,8 @@ Created on Mon Mar 29 16:05:47 2021
 #Hello???
 @author: dob1u19
 """
+import pandas as pd
+mydata= pd.read_csv("C:\\Users\\Deepanshu\\Documents\\file1.csv")
 
 import matplotlib.pyplot as plt
 ul =  #u left
