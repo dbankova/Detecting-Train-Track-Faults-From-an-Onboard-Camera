@@ -3,17 +3,15 @@
 UK Graduate Modelling Camp 29-31 March 2021:
 Detecting Train Track Faults From an Onboard Camera
 """
+#Code for looking at train tracks from camera images
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#Import data - file location needs changing
 mydata= pd.read_csv("C:\\Users\\Deepanshu\\Documents\\file1.csv")
 
-ul =  #u left
-vl=  #v left
-ur=  #u right
-vr=  #v right
-
-plt.plot(ul,vl)
-plt.plot(ur,vr)
+#plot points
+plt.plot(mydata.left_u,mydata.left_v)
+plt.plot(mydata.right_u,mydata.right_v)
 plt.show()
