@@ -10,11 +10,6 @@ import matplotlib.pyplot as plt
 
 mydata= pd.read_csv("C:\\Users\\Deepanshu\\Documents\\file1.csv")
 
-ul =  #u left
-vl=  #v left
-ur=  #u right
-vr=  #v right
-
-plt.plot(ul,vl)
-plt.plot(ur,vr)
+plt.plot(mydata.left_u,mydata.left_v)
+plt.plot(mydata.right_u,mydata.right_v)
 plt.show()
