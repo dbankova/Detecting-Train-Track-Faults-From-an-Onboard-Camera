@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar 29 16:05:47 2021
-#Hello???
-@author: dob1u19
+UK Graduate Modelling Camp 29-31 March 2021:
+Detecting Train Track Faults From an Onboard Camera
 """
 import numpy as np
 import pandas as pd
