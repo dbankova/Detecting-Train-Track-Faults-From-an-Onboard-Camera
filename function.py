@@ -1,9 +1,9 @@
 import numpy as np
 
 # Transformation matrix from real 3D space to 2D image space
-def transformation_matrix(angles):
+def transformation_matrix(f, angles, coordinates):
     theta,phi,psi = angles
-    # Potation matrices
+    # Rotation matrices
     R1 = np.matrix([[ 1, 0           , 0           ],
                    [ 0, np.cos(psi), np.sin(psi)],
                    [ 0, -np.sin(psi), np.cos(psi)]])
@@ -13,7 +13,10 @@ def transformation_matrix(angles):
     R3 = np.matrix([[ np.cos(phi), np.sin(phi), 0 ],
                    [ -np.sin(phi), np.cos(phi) , 0 ],
                    [ 0           , 0            , 1 ]])
-    return np.dot(R1,np.dot(R2,R3))
+    new_coords = np.dot(np.dot(R1,np.dot(R2,R3)),coordinates)
+    #new_coords = new_coords[0]
+    print(new_coords)
+    #return f*[new_coords[1],new_coords[2]]/new_coords[0]
 #
 #def function(X, phi, theta, psi, f, Xd):
 #    X = X-Xd
@@ -24,16 +27,6 @@ def transformation_matrix(angles):
 #    v = f*X[2]/X[0]
 #    return [u,v]
 #    
-
-<<<<<<< Updated upstream
-def function(X, phi, theta, psi, f, Xd):
-    X = X-Xd
-    X = np.dot(Rz(phi), X)
-    X = np.dot(Ry(theta), X)
-    X = np.dot(Rx(psi), X)
-    u = f*X[1]/X[0]
-    v = f*X[2]/X[0]
-    return [u,v]
 
 g = 1.435 #track gauge
 w = 0.11 #track width
@@ -62,7 +55,10 @@ Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
-=======
+
+
 angles = np.array([1,2,3])
-print(transformation_matrix(angles))
->>>>>>> Stashed changes
+coordinates = np.array([1,2,3])
+f = 0.05
+transformation_matrix(f, angles, coordinates)
+
