@@ -17,31 +17,31 @@ def transformation_matrix(f, angles, coordinates):
     print(new_coords)
     return f*np.array([new_coords[0,1],new_coords[0,2]])/new_coords[0,0]
 
-g = 1.435 #track gauge
-w = 0.11 #track width
-h = 2.165 #camera height
-f = 0.0058 #focal length
+g = 1.435 # track gauge
+w = 0.11 # track width
+h = 2.165 # camera height
+f = 0.0058 # focal length
 
-xd = 0 #x position of camera
-yd = 0.6 #y position of camera
-zd = 0 #z position of camera
+xd = 0 # x position of camera
+yd = 0.6 # y position of camera
+zd = 0 # z position of camera
+campos = np.array([xd,yd,zd]) # camera position
 
+theta = -0.3333578871 # pitch angle
+phi = -0.1270599695 # yaw angle
+psi = 0 # roll angle (this will change with horizontal train vibrations)
+angles = np.array([theta,phi,psi]) # it is theta, phi and psi in this order
 
-theta = -0.3333578871 #pitch angle
-phi = -0.1270599695 #yaw angle
-psi = 0 #roll angle (this will change with horizontal train vibrations)
-angles = np.array([theta,phi,psi]) #it is theta, phi and psi in this order
+xmax = 40 # max value of x we look ahead to in metres
+N = 50 # mesh
+x=np.linspace(0,xmax,N) # range from 0 to xmax metres, split up with the mesh number N
 
-xmax = 40 #max value of x we look ahead to in metres
-N = 50 #mesh
-x=np.linspace(0,xmax,N) #range from 0 to xmax metres, split up with the mesh number N
+ylo = (g/2+w)*np.ones(N) # left outer
+yli = g/2*np.ones(N) # left inner
+yro = (-g/2-w)*np.ones(N) # right outer
+yri = -g/2*np.ones(N) # right inner
 
-ylo = (g/2+w)*np.ones(N) #left outer
-yli = g/2*np.ones(N) #left inner
-yro = (-g/2-w)*np.ones(N) #right outer
-yri = -g/2*np.ones(N) #right inner
-
-z = -h*np.ones(50) #we take camera to be the origin, so track is at -h
+z = -h*np.ones(50) # we take camera to be the origin, so track is at -h
 
 Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
