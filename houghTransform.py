@@ -32,6 +32,13 @@ def hough_transform(image_file,input_path,output_path,canny_par=(5,5,26),image_n
     edges = canny(image, canny_par[0],canny_par[1],canny_par[2])
     lines = probabilistic_hough_line(edges, threshold=10, line_length=5,
                                      line_gap=3)
+    
+    x_left_bound   = 200
+    x_right_bound  = 800
+    y_upper_bound  = 150
+    y_lower_bound  = np.shape(image)[1]
+    horizontal_tol = 10
+    distance_tol   = 15 
 
     if image_num ==3:
         # Generating figure
@@ -47,7 +54,11 @@ def hough_transform(image_file,input_path,output_path,canny_par=(5,5,26),image_n
         ax[2].imshow(edges * 0)
         for line in lines:
             p0, p1 = line
-            ax[2].plot((p0[0], p1[0]), (p0[1], p1[1]))
+                if p0[0]<x_left_bound or p0[0]>x_right_bound or p0[1]<y_upper_bound or p1[1]<y_upper_bound or np.abs(p0[1]-p1[1])<horizontal_tol or np.sqrt((p0[0]-p1[0])**2 + (p0[1]-p1[1])**2)<distance_tol:
+                    pass
+                else:
+                    ax[2].plot((p0[0], p1[0]), (p0[1], p1[1]))
+            #ax[2].plot((p0[0], p1[0]), (p0[1], p1[1]))
 
         ax[2].set_xlim((0, image.shape[1]))
         ax[2].set_ylim((image.shape[0], 0))
@@ -72,7 +83,11 @@ def hough_transform(image_file,input_path,output_path,canny_par=(5,5,26),image_n
         ax[1].imshow(edges * 0)
         for line in lines:
             p0, p1 = line
-            ax[1].plot((p0[0], p1[0]), (p0[1], p1[1]))
+                if p0[0]<x_left_bound or p0[0]>x_right_bound or p0[1]<y_upper_bound or p1[1]<y_upper_bound or np.abs(p0[1]-p1[1])<horizontal_tol or np.sqrt((p0[0]-p1[0])**2 + (p0[1]-p1[1])**2)<distance_tol:
+                    pass
+                else:
+                    ax[1].plot((p0[0], p1[0]), (p0[1], p1[1]))
+            #ax[1].plot((p0[0], p1[0]), (p0[1], p1[1]))
 
         ax[1].set_xlim((0, image.shape[1]))
         ax[1].set_ylim((image.shape[0], 0))
@@ -97,7 +112,11 @@ def hough_transform(image_file,input_path,output_path,canny_par=(5,5,26),image_n
         ax.imshow(edges * 0)
         for line in lines:
             p0, p1 = line
-            ax.plot((p0[0], p1[0]), (p0[1], p1[1]))
+              if p0[0]<x_left_bound or p0[0]>x_right_bound or p0[1]<y_upper_bound or p1[1]<y_upper_bound or np.abs(p0[1]-p1[1])<horizontal_tol or np.sqrt((p0[0]-p1[0])**2 + (p0[1]-p1[1])**2)<distance_tol:
+                  pass
+              else:
+                  ax.plot((p0[0], p1[0]), (p0[1], p1[1]))
+           # ax.plot((p0[0], p1[0]), (p0[1], p1[1]))
 
         ax.set_xlim((0, image.shape[1]))
         ax.set_ylim((image.shape[0], 0))
