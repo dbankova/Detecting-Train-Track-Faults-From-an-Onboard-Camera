@@ -1,7 +1,7 @@
 import numpy as np
 
 # Transformation matrix from real 3D space to 2D image space
-def transformation_matrix(f, angles, coordinates):
+def transformation_matrix(f, angles, coordinates, campos):
     theta,phi,psi = angles
     # Rotation matrices
     R1 = np.matrix([[ 1, 0           , 0           ],
@@ -13,7 +13,7 @@ def transformation_matrix(f, angles, coordinates):
     R3 = np.matrix([[ np.cos(phi), np.sin(phi), 0 ],
                    [ -np.sin(phi), np.cos(phi) , 0 ],
                    [ 0           , 0            , 1 ]])
-    new_coords = np.dot(np.dot(R1,np.dot(R2,R3)),coordinates)
+    new_coords = np.dot(np.dot(R1,np.dot(R2,R3)),coordinates-campos)
     print(new_coords)
     return f*np.array([new_coords[0,1],new_coords[0,2]])/new_coords[0,0]
 
@@ -49,8 +49,6 @@ Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
 
 
-angles = np.array([1,2,3])
 coordinates = np.array([1,2,3])
-f = 0.05
-u,v =transformation_matrix(f, angles, coordinates)
+u,v =transformation_matrix(f, angles, coordinates, campos)
 print(u,v)
