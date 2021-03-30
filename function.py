@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
   
 def Rx(theta):
   return np.matrix([[ 1, 0           , 0           ],
