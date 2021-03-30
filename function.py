@@ -26,9 +26,14 @@ f = 0.0058 # focal length
 
 # Camera position in 3D space
 campos = np.array([0,0.6,-2.165])
+#campos = np.array([0, 0.55, -2.165]) # change in y
+#campos = np.array([0, 0.6, -2]) # change in z
 
 # theta (the pitch angle), phi (yaw angle) and psi (the roll angle)
 angles = np.array([-0.3333578871,-0.1270599695,0])
+#angles = np.array([-0.3533578871,-0.1270599695,0]) # change in theta
+#angles = np.array([-0.3333578871,-0.1170599695,0]) # change in phi
+#angles = np.array([-0.3333578871,-0.1270599695,0.05]) # change in psi
 
 xmax = 40 # max value of x we look ahead to in metres
 N = 50 # mesh
