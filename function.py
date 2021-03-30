@@ -30,7 +30,7 @@ zd = 0 #z position of camera
 theta = -0.3333578871 #pitch angle
 phi = -0.1270599695 #yaw angle
 psi = 0 #roll angle (this will change with horizontal train vibrations)
-angles = np.array([theta,phi,psi])
+angles = np.array([theta,phi,psi]) #it is theta, phi and psi in this order
 
 xmax = 40 #max value of x we look ahead to in metres
 N = 50 #mesh
