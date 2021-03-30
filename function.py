@@ -1,20 +1,31 @@
 import numpy as np
-  
-def Rx(theta):
-  return np.matrix([[ 1, 0           , 0           ],
-                   [ 0, np.cos(theta),-np.sin(theta)],
-                   [ 0, np.sin(theta), np.cos(theta)]])
-  
-def Ry(theta):
-  return np.matrix([[ np.cos(theta), 0, np.sin(theta)],
-                   [ 0           , 1, 0           ],
-                   [-np.sin(theta), 0, np.cos(theta)]])
-  
-def Rz(theta):
-  return np.matrix([[ np.cos(theta), -np.sin(theta), 0 ],
-                   [ np.sin(theta), np.cos(theta) , 0 ],
-                   [ 0           , 0            , 1 ]])
 
+# Transformation matrix from real 3D space to 2D image space
+def transformation_matrix(angles):
+    theta,phi,psi = angles
+    # Potation matrices
+    R1 = np.matrix([[ 1, 0           , 0           ],
+                   [ 0, np.cos(psi), np.sin(psi)],
+                   [ 0, -np.sin(psi), np.cos(psi)]])
+    R2 = np.matrix([[ np.cos(theta), 0, -np.sin(theta)],
+                   [ 0           , 1, 0           ],
+                   [ np.sin(theta), 0, np.cos(theta)]])
+    R3 = np.matrix([[ np.cos(phi), np.sin(phi), 0 ],
+                   [ -np.sin(phi), np.cos(phi) , 0 ],
+                   [ 0           , 0            , 1 ]])
+    return np.dot(R1,np.dot(R2,R3))
+#
+#def function(X, phi, theta, psi, f, Xd):
+#    X = X-Xd
+#    X = np.dot(Rz(phi), X)
+#    X = np.dot(Ry(theta), X)
+#    X = np.dot(Rx(psi), X)
+#    u = f*X[1]/X[0]
+#    v = f*X[2]/X[0]
+#    return [u,v]
+#    
+
+<<<<<<< Updated upstream
 def function(X, phi, theta, psi, f, Xd):
     X = X-Xd
     X = np.dot(Rz(phi), X)
@@ -51,3 +62,7 @@ Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
+=======
+angles = np.array([1,2,3])
+print(transformation_matrix(angles))
+>>>>>>> Stashed changes

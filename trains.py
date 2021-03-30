@@ -39,7 +39,7 @@ plt.show()
 
 u = mydata.left_u
 v = mydata.left_v
-InitialParGuess = np.array([3, 10])
+InitialParGuess = np.array([-100, -2])
 
 # Fit v as a function of u
 fit_result = minimize(lambda param_guess : DataDistance(param_guess, u, v), InitialParGuess)
