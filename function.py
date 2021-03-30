@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
   
 def Rx(theta):
   return np.matrix([[ 1, 0           , 0           ],
@@ -29,5 +28,8 @@ g = 1.435 #track gauge
 w = 0.11 #track width
 xmax = 40 #max value of x we look ahead to
 x=np.linspace(0,xmax) #range from 0 to xmax metres
-y1 = np.array([g/2,-g/2]) #INNER track for two values y= g/2 and -g/2
-y2 = np.array([g/2+w,-g/2-w]) #OUTER track for two values 
+
+ylo = g/2+w #left outer
+yli = g/2 #left inner
+yro = -g/2-w #right outer
+yri = -g/2 #right inner
