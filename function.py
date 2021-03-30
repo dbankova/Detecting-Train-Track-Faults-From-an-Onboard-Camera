@@ -1,19 +1,18 @@
 import numpy as np
-import math as m
   
 def Rx(theta):
   return np.matrix([[ 1, 0           , 0           ],
-                   [ 0, m.cos(theta),-m.sin(theta)],
-                   [ 0, m.sin(theta), m.cos(theta)]])
+                   [ 0, np.cos(theta),-np.sin(theta)],
+                   [ 0, np.sin(theta), np.cos(theta)]])
   
 def Ry(theta):
-  return np.matrix([[ m.cos(theta), 0, m.sin(theta)],
+  return np.matrix([[ np.cos(theta), 0, np.sin(theta)],
                    [ 0           , 1, 0           ],
-                   [-m.sin(theta), 0, m.cos(theta)]])
+                   [-np.sin(theta), 0, np.cos(theta)]])
   
 def Rz(theta):
-  return np.matrix([[ m.cos(theta), -m.sin(theta), 0 ],
-                   [ m.sin(theta), m.cos(theta) , 0 ],
+  return np.matrix([[ np.cos(theta), -np.sin(theta), 0 ],
+                   [ np.sin(theta), np.cos(theta) , 0 ],
                    [ 0           , 0            , 1 ]])
 
 def function(X, phi, theta, psi, f, Xd):
