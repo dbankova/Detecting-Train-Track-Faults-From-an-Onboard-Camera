@@ -20,14 +20,17 @@ def transformation_matrix(f, angles, coordinates):
 g = 1.435 #track gauge
 w = 0.11 #track width
 h = 2.165 #camera height
+f = 0.0058 #focal length
 
 xd = 0 #x position of camera
 yd = 0.6 #y position of camera
 zd = 0 #z position of camera
 
+
 theta = -0.3333578871 #pitch angle
 phi = -0.1270599695 #yaw angle
 psi = 0 #roll angle (this will change with horizontal train vibrations)
+angles = np.array([theta,phi,psi])
 
 xmax = 40 #max value of x we look ahead to in metres
 N = 50 #mesh
