@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Transformation matrix from real 3D space to 2D image space
 def transformation_matrix(f, angles, coordinates, campos):
@@ -14,6 +15,8 @@ def transformation_matrix(f, angles, coordinates, campos):
                    [ -np.sin(phi), np.cos(phi) , 0 ],
                    [ 0           , 0            , 1 ]])
     new_coords = np.dot(np.dot(R1,np.dot(R2,R3)),coordinates-campos)
+    if new_coords[0,0] == 0:
+        return np.array([0,0])
     return f*np.array([new_coords[0,1],new_coords[0,2]])/new_coords[0,0]
 
 g = 1.435 # track gauge
@@ -22,7 +25,7 @@ h = 2.165 # camera height
 f = 0.0058 # focal length
 
 # Camera position in 3D space
-campos = np.array([0,0.6,0])
+campos = np.array([0,0.6,-2.165])
 
 # theta (the pitch angle), phi (yaw angle) and psi (the roll angle)
 angles = np.array([-0.3333578871,-0.1270599695,0])
@@ -44,6 +47,32 @@ Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
 
 
-coordinates = np.array([1,2,3])
-u,v = transformation_matrix(f, angles, coordinates, campos)
-print(u,v)
+#u,v = transformation_matrix(f, angles, coordinates, campos)
+
+# Number of data points to generate
+n = 50
+# Generate left rail when stationary
+left_rail_3D = np.array([np.linspace(5, 20, num = n), -g/2*np.ones(n), np.zeros(n)])
+left_rail_3D = np.transpose(left_rail_3D)
+u_left = np.zeros(n)
+v_left = np.zeros(n)
+for i in range(n):
+    u_left[i],v_left[i] = transformation_matrix(f, angles, left_rail_3D[i], campos)*181818.1818
+
+# Generate right rail when stationary
+right_rail_3D = np.array([np.linspace(5, 20, num = n), g/2*np.ones(n), np.zeros(n)])
+right_rail_3D = np.transpose(right_rail_3D)
+u_right = np.zeros(n)
+v_right = np.zeros(n)
+for i in range(n):
+    u_right[i],v_right[i] = transformation_matrix(f, angles, right_rail_3D[i], campos)*181818.1818
+
+# Plot left and right rail
+f = plt.figure()
+h1, = plt.plot(u_left, v_left, label="Left rail");
+h2, = plt.plot(u_right, v_right, label="Right rail");
+plt.xlabel('u [px]')
+plt.ylabel('v [px]')
+plt.legend(handles=[h1,h2]);
+plt.gca().invert_yaxis()
+plt.show()
