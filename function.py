@@ -23,4 +23,10 @@ def function(X, phi, theta, psi, f, Xd):
     u = f*X[1]/X[0]
     v = f*X[2]/X[0]
     return [u,v]
-    
+
+g = 1.435 #track gauge
+w = 0.11 #track width
+xmax = 40 #max value of x we look ahead to
+x=[0,40] #range from 0 to xmax metres
+y1 = (g/2,-g/2) #INNER track for two values y= g/2 and -g/2
+y2 = (g/2+w,-g/2-w) #OUTER track for two values 
