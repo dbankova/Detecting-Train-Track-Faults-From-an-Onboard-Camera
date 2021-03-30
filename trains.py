@@ -16,15 +16,15 @@ def DataDistance(param_guess, u, v):
         "The number of u-coordinates {} is not ".format(u.shape) \
         + "equal to the number of v-coordinates {}".format(v.shape)
     # Compute v_fit = param_guess[0] + param_guess[1]*u
-    v_fit = fitting_function(param_guess, u)
+    u_fit = fitting_function(param_guess, v)
     # Compute the distance between the new and old data sets
-    distance = ((v-v_fit)**2).sum()
+    distance = ((u-u_fit)**2).sum()
     return distance
 
-# Function for fitting v as a function of u
-def fitting_function(eqn_params, u):
-    v = eqn_params[0] + eqn_params[1]*u
-    return v
+# Function for fitting u as a function of v
+def fitting_function(eqn_params, v):
+    u = eqn_params[0] + eqn_params[1]*v
+    return u
 
 # Transformation matrix from real 3D space to 2D image space
 def transformation_matrix(f, angles, coordinates, campos):
@@ -44,33 +44,21 @@ def transformation_matrix(f, angles, coordinates, campos):
         return np.array([0,0])
     return f*np.array([new_coords[0,1],new_coords[0,2]])/new_coords[0,0]
 
+# Function to compute the distance between the raw data and the Stationary rail
+def DistanceToStationary(data, StLeft_u,StRight_u):
+    left_u = data.left_u
+    left_v = data.left_v
+    right_u = data.right_u
+    right_v = data.right_v
+    distance = ((left_u-StLeft_u(left_v))**2).sum() + ((right_u-StRight_u(right_v))**2).sum()
+    return distance
+
 # Import data
 mydata= pd.read_csv("data\\straight-track-points-on-image-1.csv")
 
 # Plot points
-plt.plot(mydata.left_u, mydata.left_v)
-plt.plot(mydata.right_u, mydata.right_v)
-plt.gca().invert_yaxis()
-plt.show()
-
-#u = mydata.left_u
-#v = mydata.left_v
-#InitialParGuess = np.array([-100, -2])
-
-# Fit v as a function of u
-#fit_result = minimize(lambda param_guess : DataDistance(param_guess, u, v), InitialParGuess)
-
-# Extract fitting parameters and compute best fit
-#eqn_par_fit = [fit_result.x[0], fit_result.x[1]]
-#v_fit = fitting_function(eqn_par_fit, u)
-
-# Plot the data and the best fit
-#f = plt.figure()
-#h1, = plt.plot(u, v, label="Left rail raw data");
-#h2, = plt.plot(u, v_fit, label="Left rail fit");
-#plt.xlabel('u [px]')
-#plt.ylabel('v [px]')
-#plt.legend(handles=[h1,h2]);
+#plt.plot(mydata.left_u, mydata.left_v)
+#plt.plot(mydata.right_u, mydata.right_v)
 #plt.gca().invert_yaxis()
 #plt.show()
 
@@ -103,14 +91,53 @@ v_right = np.zeros(n)
 for i in range(n):
     u_right[i],v_right[i] = transformation_matrix(f, angles, right_rail_3D[i], campos)*181818.1818
 
-# Plot left and right rail
+# Plot the Stationary rail and the current rail
 f = plt.figure()
-h1, = plt.plot(u_left, v_left, label="Left rail");
-h2, = plt.plot(u_right, v_right, label="Right rail");
-h3, = plt.plot(mydata.left_u, mydata.left_v, label="Left rail 1");
-h4, = plt.plot(mydata.right_u, mydata.right_v, label="Right rail 1");
+h1, = plt.plot(u_left, v_left, '0.6', label="Stationary rail");
+h2, = plt.plot(u_right, v_right, '0.6');
+h3, = plt.plot(mydata.left_u, mydata.left_v, 'r', label="Rail 1");
+h4, = plt.plot(mydata.right_u, mydata.right_v, 'r');
 plt.xlabel('u [px]')
 plt.ylabel('v [px]')
-plt.legend(handles=[h1,h2,h3,h4]);
+plt.legend(handles=[h1,h3]);
+#plt.title('13915.953621951565')
 plt.gca().invert_yaxis()
 plt.show()
+
+# Find u as a function of v for the left and right Stationary rails
+u = u_left
+v = v_left
+InitialParGuess = np.array([-100, -2])
+
+# Fit u as a function of v
+fit_result = minimize(lambda param_guess : DataDistance(param_guess, u, v), InitialParGuess)
+
+# Extract fitting parameters and compute best fit
+eqn_par_left = [fit_result.x[0], fit_result.x[1]]
+StLeft_u = lambda v: fitting_function(eqn_par_left, v)
+
+# Plot the data and the best fit
+#f = plt.figure()
+#h1, = plt.plot(u, v, label="Left rail raw data");
+#h2, = plt.plot(StLeft_u(v), v, label="Left rail fit");
+#plt.xlabel('u [px]')
+#plt.ylabel('v [px]')
+#plt.legend(handles=[h1,h2]);
+#plt.gca().invert_yaxis()
+#plt.show()
+
+# Find u as a function of v for the left and right Stationary rails
+u = u_right
+v = v_right
+InitialParGuess = np.array([-100, -2])
+
+# Fit u as a function of v
+fit_result = minimize(lambda param_guess : DataDistance(param_guess, u, v), InitialParGuess)
+
+# Extract fitting parameters and compute best fit
+eqn_par_right = [fit_result.x[0], fit_result.x[1]]
+StRight_u = lambda v: fitting_function(eqn_par_right, v)
+
+# Find the distance between the Stationary rail and the current rail
+distance = DistanceToStationary(mydata, StLeft_u,StRight_u)
+print(distance)
