@@ -14,19 +14,8 @@ def transformation_matrix(f, angles, coordinates):
                    [ -np.sin(phi), np.cos(phi) , 0 ],
                    [ 0           , 0            , 1 ]])
     new_coords = np.dot(np.dot(R1,np.dot(R2,R3)),coordinates)
-    #new_coords = new_coords[0]
     print(new_coords)
-    #return f*[new_coords[1],new_coords[2]]/new_coords[0]
-#
-#def function(X, phi, theta, psi, f, Xd):
-#    X = X-Xd
-#    X = np.dot(Rz(phi), X)
-#    X = np.dot(Ry(theta), X)
-#    X = np.dot(Rx(psi), X)
-#    u = f*X[1]/X[0]
-#    v = f*X[2]/X[0]
-#    return [u,v]
-#    
+    return f*np.array([new_coords[0,1],new_coords[0,2]])/new_coords[0,0]
 
 g = 1.435 #track gauge
 w = 0.11 #track width
@@ -60,5 +49,5 @@ Xlo = np.array([x,ylo,z])
 angles = np.array([1,2,3])
 coordinates = np.array([1,2,3])
 f = 0.05
-transformation_matrix(f, angles, coordinates)
-
+u,v =transformation_matrix(f, angles, coordinates)
+print(u,v)
