@@ -5,7 +5,7 @@ Created on Mon Mar 29 18:32:50 2021
 
 @author: yz3259
 """
-#import numpy as np
+import numpy as np
 import matplotlib.pyplot as plt
 
 from matplotlib import cm
@@ -112,4 +112,22 @@ def hough_transform(image_file,input_path,output_path,canny_par=(5,5,26),image_n
     #fig.savefig('Data/Output/ax2_figure.png', bbox_inches=extent)
         #plt.show()
         plt.close()
-        return 'Ok!'
+        
+    loc = location_points(lines)
+    np.savetxt(output_path+f'/loc_{image_file[:-4]}.csv',loc,delimiter=",")
+    return loc
+
+
+def location_points(lines):
+   
+    x0 = np.array([i[0] for i in [i[0] for i in lines]])
+    x1 = np.array([i[1] for i in [i[0] for i in lines]])
+    y0 = np.array([i[0] for i in [i[1] for i in lines]])
+    y1 = np.array([i[1] for i in [i[1] for i in lines]])
+    
+    
+   # plt.scatter((x0,y0),(x1,y1))
+    #plt.scatter(x1,y1)
+    #plt.show()
+    #plt.close()
+    return np.vstack((x0,y0,x1,y1))
