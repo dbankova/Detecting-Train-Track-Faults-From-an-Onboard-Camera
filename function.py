@@ -37,14 +37,15 @@ phi = -0.1270599695 #yaw angle
 psi = 0 #roll angle (this will change with horizontal train vibrations)
 
 xmax = 40 #max value of x we look ahead to in metres
-x=np.linspace(0,xmax) #range from 0 to xmax metres
+N = 50 #mesh
+x=np.linspace(0,xmax,N) #range from 0 to xmax metres, split up with the mesh number N
 
-ylo = g/2+w #left outer
-yli = g/2 #left inner
-yro = -g/2-w #right outer
-yri = -g/2 #right inner
+ylo = (g/2+w)*np.ones(N) #left outer
+yli = g/2*np.ones(N) #left inner
+yro = (-g/2-w)*np.ones(N) #right outer
+yri = -g/2*np.ones(N) #right inner
 
-z = -h #we take camera to be the origin, so track is at -h
+z = -h*np.ones(50) #we take camera to be the origin, so track is at -h
 
 Xlo = np.array([x,ylo,z])
 Xlo = np.array([x,ylo,z])
